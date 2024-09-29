@@ -1,7 +1,7 @@
 
-# GARV-BI 1.0: Global Academic Record and Verification Framework
+# GARV-BI 1.0 Framework: Global Academic Record and Verification based on Blockchain and IPFS 
 
-**GARV-BI (Global Academic Record and Verification)** is an open-source framework designed to securely manage and verify academic records using blockchain technology. It leverages zkEVM for privacy-preserving smart contracts, Decentralized Identifiers (DIDs) for global student identification, and IPFS for decentralized file storage.
+**GARV-BI (Global Academic Record and Verification based on Blockchain and IPFS)** is an open-source framework designed to securely manage and verify academic records using blockchain technology. It leverages zkEVM for privacy-preserving smart contracts, Decentralized Identifiers (DIDs) for global student identification, and IPFS for decentralized file storage.
 
 ## Features
 
