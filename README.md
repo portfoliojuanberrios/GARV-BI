@@ -150,9 +150,6 @@ cd ../Public-zkEVM
 truffle test
 ```
 
-### API Testing
-
-You can also test the API endpoints using [Postman](https://www.postman.com/). A collection of pre-configured requests is included in the `API/PostmanCollection.json`.
 
 ## License
 
