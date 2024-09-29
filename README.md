@@ -102,7 +102,7 @@ Use Truffle to compile and deploy the smart contracts on both networks.
 
 ### Step 5: Run the API Server
 
-After deploying the smart contracts, you can start the API server. Ensure you have the environment variables set up in a `.env` file (see the `API/.env.example` for reference).
+After deploying the smart contracts, you can start the API server. Ensure you have the environment variables set up in a `.env` file.
 
 ```bash
 cd ../API
@@ -134,7 +134,7 @@ The local development setup is configured as follows:
 
 The system architecture is based on a dual blockchain network to divide public credential verification and private data management between public and private zkEVM chains. The API serves as the mediator between the WebApp, smart contracts, and IPFS storage.
 
-For more details on the network architecture, refer to the provided figures in the thesis report.
+For more details on the network architecture, refer to the provided figures in the report.
 
 ## Tests
 
@@ -153,7 +153,7 @@ truffle test
 
 ## License
 
-This project is open-source under the MIT License.
+This project is open-source under GPL-3.0 license.
 
 ## Contributors
 
