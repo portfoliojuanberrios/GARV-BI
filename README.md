@@ -83,8 +83,7 @@ To test the system locally, you will need to set up two instances of Ganache to 
     ```bash
     ganache-cli --port 8546
     ```
-
-### Step 4: Deploy Smart Contracts
+### Step 4: Deploy Smart Contracts and Update Contract Addresses
 
 Use Truffle to compile and deploy the smart contracts on both networks.
 
@@ -100,6 +99,21 @@ Use Truffle to compile and deploy the smart contracts on both networks.
     truffle migrate --network development
     ```
 
+3. **Update Contract Addresses in API**:
+
+   After deploying the contracts, you need to update the `contractAddresses.json` file located in the `API` folder with the new contract addresses. These addresses are shown in the Truffle migration output.
+
+   - Go to the `API/contractAddresses.json` file.
+   - Replace the existing contract addresses with the ones from the Truffle deployment output.
+   - Save the changes before running the API server.
+
+Example of how to update `contractAddresses.json`:
+```json
+{
+  "PrivateContract": "0xNewPrivateContractAddress",
+  "PublicContract": "0xNewPublicContractAddress"
+}
+```
 ### Step 5: Run the API Server
 
 After deploying the smart contracts, you can start the API server. Ensure you have the environment variables set up in a `.env` file.
