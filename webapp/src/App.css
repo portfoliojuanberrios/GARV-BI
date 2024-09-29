@@ -1,0 +1,42 @@
+.App {
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+}
+
+.content {
+  padding: 20px;
+  background-color: #ffffff;
+}
+
+button {
+  font-size: 18px;
+  margin: 10px 0;
+  padding: 10px;
+  width: 100%;
+  border: none;
+  background-color: #007BFF;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.logo {
+  width: 100px;
+  margin-bottom: 20px;
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .content {
+    max-width: 800px;
+    margin: auto;
+  }
+}

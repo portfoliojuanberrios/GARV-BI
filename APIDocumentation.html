@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GARV-BI Framework API Documentation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1, h2, h3, h4 {
+            color: #2E3D49;
+        }
+        pre {
+            background-color: #F4F4F4;
+            padding: 15px;
+            overflow-x: auto;
+        }
+        code {
+            background-color: #F4F4F4;
+            padding: 2px 4px;
+        }
+        hr {
+            border: none;
+            border-top: 1px solid #DDD;
+            margin: 40px 0;
+        }
+        a {
+            color: #1A73E8;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        ul, ol {
+            margin-left: 20px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+        }
+        table, th, td {
+            border: 1px solid #DDD;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        .code-block {
+            background-color: #F4F4F4;
+            border: 1px solid #DDD;
+            padding: 15px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+
+<h1>GARV-BI Framework API Documentation</h1>
+
+<h2>Table of Contents</h2>
+<ol>
+    <li><a href="#general-description">General Description</a></li>
+    <li><a href="#architecture">Architecture</a></li>
+    <li><a href="#api-endpoints">API Endpoints</a>
+        <ol>
+            <li><a href="#register-student">Register a Student</a></li>
+            <li><a href="#register-did">Register a DID</a></li>
+            <li><a href="#upload-ipfs">Upload File to IPFS</a></li>
+            <li><a href="#retrieve-ipfs">Retrieve File from IPFS</a></li>
+            <li><a href="#assign-credential">Assign a Credential to a Student</a></li>
+            <li><a href="#issue-credential">Issue a Credential</a></li>
+            <li><a href="#revoke-credential">Revoke a Credential</a></li>
+            <li><a href="#verify-credential">Verify a Credential</a></li>
+            <li><a href="#get-student">Get Student Data by DID</a></li>
+        </ol>
+    </li>
+</ol>
+
+<hr>
+
+<h2 id="general-description">1. General Description</h2>
+
+<p>
+    The <strong>GARV-BI Framework</strong> allows for the secure management and verification of academic credentials using advanced technologies such as:
+</p>
+<ul>
+    <li><strong>zkEVM Blockchain</strong></li>
+    <li><strong>IPFS (InterPlanetary File System)</strong></li>
+    <li><strong>Zero-Knowledge Proofs (ZKP)</strong></li>
+    <li><strong>Decentralized Identifiers (DIDs)</strong></li>
+</ul>
+<p>
+    The API facilitates interaction with smart contracts to register, issue, revoke, and verify academic credentials without compromising the privacy of sensitive student data.
+</p>
+
+<hr>
+
+<h2 id="architecture">2. Architecture</h2>
+
+<ul>
+    <li><strong>Public and Private zkEVM Blockchain</strong>: Data is distributed between public blockchains (for verifiable credentials) and private blockchains (for sensitive data such as email and student identity).</li>
+    <li><strong>IPFS</strong>: Used for secure, decentralized file storage.</li>
+    <li><strong>Decentralized Identifiers (DIDs)</strong>: Ensures secure and globally interoperable student identification.</li>
+</ul>
+
+<hr>
+
+<h2 id="api-endpoints">3. API Endpoints</h2>
+
+<h3 id="register-student">3.1. Register a Student</h3>
+
+<ul>
+    <li><strong>URL</strong>: <code>/register-student</code></li>
+    <li><strong>Method</strong>: <code>POST</code></li>
+</ul>
+
+<h4>Description</h4>
+<p>
+    Registers a student in the system, generates a DID if one is not provided, and stores the student’s personal data on the private blockchain.
+</p>
+
+<h4>Parameters</h4>
+<ul>
+    <li><code>name</code> (string): Full name of the student.</li>
+    <li><code>email</code> (string): Student's email address.</li>
+    <li><code>dateOfBirth</code> (string): Date of birth in the format <code>YYYY-MM-DD</code>.</li>
+    <li><code>phoneNumber</code> (string): Phone number.</li>
+    <li><code>nationality</code> (string): Student’s nationality.</li>
+    <li><code>did</code> (string, Optional): Decentralized Identifier (DID) for the student. If not provided, one will be generated.</li>
+</ul>
+
+<h4>Sample Request</h4>
+<pre class="code-block">
+{
+  "name": "Juan Alamiro Berrios Moya",
+  "email": "juan.berrios@example.com",
+  "dateOfBirth": "1990-05-15",
+  "phoneNumber": "+56912345678",
+  "nationality": "Chilean"
+}
+</pre>
+
+<h4>Response</h4>
+<pre class="code-block">
+{
+  "message": "Student registered successfully.",
+  "did": "did:example:123456789abcdefghi",
+  "sensitiveDataTransactionHash": "0xabc123456789"
+}
+</pre>
+
+<h4>Possible Errors</h4>
+<ul>
+    <li><strong>400</strong>: Invalid or incomplete parameters.</li>
+    <li><strong>500</strong>: Internal server error while registering the student.</li>
+</ul>
+
+<hr>
+
+<h3 id="register-did">3.2. Register a DID</h3>
+
+<ul>
+    <li><strong>URL</strong>: <code>/register-did</code></li>
+    <li><strong>Method</strong>: <code>POST</code></li>
+</ul>
+
+<h4>Description</h4>
+<p>
+    Registers a Decentralized Identifier (DID) on the private blockchain.
+</p>
+
+<h4>Parameters</h4>
+<ul>
+    <li><code>did</code> (string): The Decentralized Identifier (DID) to be registered.</li>
+    <li><code>publicKey</code> (string): Public key associated with the DID.</li>
+    <li><code>controller</code> (string): Controller entity of the DID.</li>
+    <li><code>verificationMethod</code> (string): Verification method (e.g., ECDSA).</li>
+</ul>
+
+<h4>Sample Request</h4>
+<pre class="code-block">
+{
+  "did": "did:example:123456789abcdefghi",
+  "publicKey": "0xabcdef1234567890",
+  "controller": "did:example:controller123",
+  "verificationMethod": "ECDSA"
+}
+</pre>
+
+<h4>Response</h4>
+<pre class="code-block">
+{
+  "message": "DID registered successfully",
+  "receipt": { "transactionHash": "0xTransactionHash123456" }
+}
+</pre>
+
+<h4>Possible Errors</h4>
+<ul>
+    <li><strong>400</strong>: Invalid parameters.</li>
+    <li><strong>500</strong>: Error interacting with the DID smart contract.</li>
+</ul>
+
+<hr>
+
+<h3 id="upload-ipfs">3.3. Upload File to IPFS</h3>
+
+<ul>
+    <li><strong>URL</strong>: <code>/upload-ipfs</code></li>
+    <li><strong>Method</strong>: <code>POST</code></li>
+</ul>
+
+<h4>Description</h4>
+<p>
+    Uploads a file to the decentralized storage system IPFS.
+</p>
+
+<h4>Parameters</h4>
+<ul>
+    <li><code>file</code> (file): The file to upload (multipart/form-data format).</li>
+</ul>
+
+<h4>Sample Request</h4>
+<p><strong>File</strong>: <code>diploma.pdf</code></p>
+
+<h4>Response</h4>
+<pre class="code-block">
+{
+  "message": "File uploaded to IPFS successfully!",
+  "ipfsHash": "QmHash123456"
+}
+</pre>
+
+<h4>Possible Errors</h4>
+<ul>
+    <li><strong>400</strong>: No file provided.</li>
+    <li><strong>500</strong>: Error uploading the file to IPFS.</li>
+</ul>
+
+<hr>
+
+<h3 id="retrieve-ipfs">3.4. Retrieve File from IPFS</h3>
+
+<ul>
+    <li><strong>URL</strong>: <code>/retrieve-ipfs/:hash</code></li>
+    <li><strong>Method</strong>: <code>GET</code></li>
+</ul>
+
+<h4>Description</h4>
+<p>
+    Retrieves a file from IPFS using its hash.
+</p>
+
+<h4>Parameters</h4>
+<ul>
+    <li><code>hash</code> (string): The hash of the file stored in IPFS.</li>
+</ul>
+
+<h4>Sample Request</h4>
+<pre class="code-block">
+GET /retrieve-ipfs/QmHash123456
+</pre>
+
+<h4>Response</h4>
+<p>Returns the requested file.</p>
+
+<h4>Possible Errors</h4>
+<ul>
+    <li><strong>500</strong>: Error retrieving the file from IPFS.</li>
+</ul>
+
+<hr>
+
+<h3 id="assign-credential">3.5. Assign a Credential to a Student</h3>
+
+<ul>
+    <li><strong>URL</strong>: <code>/assign-credential</code></li>
+    <li><strong>Method</strong>: <code>POST</code></li>
+</ul>
+
+<h4>Description</h4>
+<p>
+    Assigns a credential hash to a student registered on the private blockchain.
+</p>
+
+<h4>Parameters</h4>
+<ul>
+    <li><code>did</code> (string): The student’s DID.</li>
+    <li><code>credentialHash</code> (string): The hash of the academic credential to be assigned.</li>
+</ul>
+
+<h4>Sample Request</h4>
+<pre class="code-block">
+{
+  "did": "did:example:123456789abcdefghi",
+  "credentialHash": "0xCredentialHash123"
+}
+</pre>
+
+<h4>Response</h4>
+<pre class="code-block">
+{
+  "message": "Credential assigned successfully",
+  "did": "did:example:123456789abcdefghi",
+  "credentialHash": "0xCredentialHash123",
+  "transactionHash": "0xTransactionHash123"
+}
+</pre>
+
+<h4>Possible Errors</h4>
+<ul>
+    <li><strong>500</strong>: Error assigning the credential.</li>
+</ul>
+
+<hr>
+
+<h3 id="issue-credential">3.6. Issue a Credential</h3>
+
+<ul>
+    <li><strong>URL</strong>: <code>/issue-credential</code></li>
+    <li><strong>Method</strong>: <code>POST</code></li>
+</ul>
+
+<h4>Description</h4>
+<p>
+    Issues an academic credential on the public blockchain.
+</p>
+
+<h4>Parameters</h4>
+<ul>
+    <li><code>studentName</code> (string): Name of the student.</li>
+    <li><code>courseName</code> (string): Name of the course.</li>
+    <li><code>issueDate</code> (string): Issuance date (<code>YYYY-MM-DD</code>).</li>
+    <li><code>courseId</code> (string): Course ID.</li>
+    <li><code>institutionName</code> (string): Name of the institution.</li>
+    <li><code>institutionSignature</code> (string): Digital signature of the institution.</li>
+    <li><code>studentDID</code> (string): The student’s DID.</li>
+</ul>
+
+<h4>Sample Request</h4>
+<pre class="code-block">
+{
+  "studentName": "Juan Alamiro Berrios Moya",
+  "courseName": "Master of Applied Information Technology",
+  "issueDate": "2024-09-09",
+  "courseId": "NIT60013",
+  "institutionName": "Victoria University",
+  "institutionSignature": "SignatureOfInstitution",
+  "studentDID": "did:example:123456789abcdefghi"
+}
+</pre>
+
+<h4>Response</h4>
+<pre class="code-block">
+{
+  "message": "Credential issued on Ethereum with encryption!",
+  "hashId": "0xHashId123456"
+}
+</pre>
+
+<h4>Possible Errors</h4>
+<ul>
+    <li><strong>500</strong>: Error issuing the credential.</li>
+</ul>
+
+<hr>
+
+<h3 id="revoke-credential">3.7. Revoke a Credential</h3>
+
+<ul>
+    <li><strong>URL</strong>: <code>/revoke-credential</code></li>
+    <li><strong>Method</strong>: <code>POST</code></li>
+</ul>
+
+<h4>Description</h4>
+<p>
+    Revokes an academic credential issued on the public blockchain.
+</p>
+
+<h4>Parameters</h4>
+<ul>
+    <li><code>hashId</code> (string): Hash of the credential to revoke.</li>
+</ul>
+
+<h4>Sample Request</h4>
+<pre class="code-block">
+{
+  "hashId": "0xHashId123456"
+}
+</pre>
+
+<h4>Response</h4>
+<pre class="code-block">
+{
+  "message": "Credential revoked on Ethereum",
+  "hashId": "0xHashId123456"
+}
+</pre>
+
+<h4>Possible Errors</h4>
+<ul>
+    <li><strong>500</strong>: Error revoking the credential.</li>
+</ul>
+
+<hr>
+
+<h3 id="verify-credential">3.8. Verify a Credential</h3>
+
+<ul>
+    <li><strong>URL</strong>: <code>/verify-credential/:hashId</code></li>
+    <li><strong>Method</strong>: <code>GET</code></li>
+</ul>
+
+<h4>Description</h4>
+<p>
+    Verifies an academic credential based on its hash.
+</p>
+
+<h4>Parameters</h4>
+<ul>
+    <li><code>hashId</code> (string): The hash of the credential.</li>
+</ul>
+
+<h4>Sample Request</h4>
+<pre class="code-block">
+GET /verify-credential/0xHashId123456
+</pre>
+
+<h4>Response</h4>
+<pre class="code-block">
+{
+  "studentName": "Juan Alamiro Berrios Moya",
+  "courseName": "Master of Applied Information Technology",
+  "issueDate": "2024-09-09",
+  "courseId": "NIT60013",
+  "institutionName": "Victoria University",
+  "institutionSignature": "SignatureOfInstitution",
+  "studentDID": "did:example:123456789abcdefghi",
+  "revoked": false,
+  "hashId": "0xHashId123456"
+}
+</pre>
+
+<h4>Possible Errors</h4>
+<ul>
+    <li><strong>500</strong>: Error verifying the credential.</li>
+</ul>
+
+<hr>
+
+<h3 id="get-student">3.9. Get Student Data by DID</h3>
+
+<ul>
+    <li><strong>URL</strong>: <code>/get-student/:did</code></li>
+    <li><strong>Method</strong>: <code>GET</code></li>
+</ul>
+
+<h4>Description</h4>
+<p>
+    Retrieves a student's personal data based on their DID.
+</p>
+
+<h4>Parameters</h4>
+<ul>
+    <li><code>did</code> (string): The student’s DID.</li>
+</ul>
+
+<h4>Sample Request</h4>
+<pre class="code-block">
+GET /get-student/did:example:123456789abcdefghi
+</pre>
+
+<h4>Response</h4>
+<pre class="code-block">
+{
+  "did": "did:example:123456789abcdefghi",
+  "name": "Juan Alamiro Berrios Moya",
+  "email": "juan.berrios@example.com",
+  "dateOfBirth": "1990-05-15",
+  "phoneNumber": "+56912345678",
+  "nationality": "Chilean",
+  "credentialHash": "0xCredentialHash123"
+}
+</pre>
+
+<h4>Possible Errors</h4>
+<ul>
+    <li><strong>500</strong>: Error retrieving the student’s data.</li>
+</ul>
+
+<hr>
+
+
+</body>
+</html>
